@@ -57,7 +57,7 @@ const HeroSection = () => {
             {/* Social Links */}
             <div className="flex items-center justify-center gap-4 opacity-0 animate-fade-in [animation-delay:500ms] lg:justify-start">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/nishant-kumar-544b79290/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-border p-3 text-muted-foreground transition-all hover:border-primary hover:text-primary"
@@ -65,7 +65,7 @@ const HeroSection = () => {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/nishantkr0904"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-border p-3 text-muted-foreground transition-all hover:border-primary hover:text-primary"
