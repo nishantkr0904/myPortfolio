@@ -8,7 +8,7 @@ const projects = [
     description:
       "A comprehensive security tool that monitors network traffic and detects potential intrusion attempts using machine learning algorithms.",
     techStack: ["Python", "Flask", "nmap", "ML"],
-    github: "#",
+    github: "https://github.com/nishantkr0904/Network-Intrusion-Detection-System",
     live: null,
   },
   {
@@ -17,7 +17,7 @@ const projects = [
     description:
       "An AI-powered platform designed to support mental wellness through intelligent conversations and personalized recommendations.",
     techStack: ["Azure OpenAI", "React", "Node.js"],
-    github: "#",
+    github: "https://github.com/nishantkr0904/Calmify",
     live: "#",
   },
   {
@@ -26,7 +26,7 @@ const projects = [
     description:
       "NLP-based system for analyzing restaurant reviews, performing sentiment analysis and aspect-based classification.",
     techStack: ["Python", "NLP", "BERT", "Flask"],
-    github: "#",
+    github: "https://github.com/nishantkr0904/restaurant-review-classifier",
     live: null,
   },
   {
@@ -35,7 +35,7 @@ const projects = [
     description:
       "Multi-stock forecasting platform using Linear Regression, Random Forest, and LSTM models for market prediction.",
     techStack: ["Python", "TensorFlow", "Pandas", "Matplotlib"],
-    github: "#",
+    github: "https://github.com/nishantkr0904/Stock-Market-Analysis",
     live: null,
   },
 ];
