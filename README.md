@@ -69,7 +69,20 @@ In EmailJS account settings, add your local and production domains:
 - `http://localhost:5173`
 - Your deployed portfolio domain
 
-### 5. Verify locally
+### 5. Configure production secrets (GitHub Pages)
+
+If you deploy with GitHub Pages Actions, add these repository secrets in GitHub:
+
+- `VITE_EMAILJS_SERVICE_ID`
+- `VITE_EMAILJS_CONTACT_TEMPLATE_ID`
+- `VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID`
+- `VITE_EMAILJS_PUBLIC_KEY`
+
+Path: `GitHub repository > Settings > Secrets and variables > Actions > New repository secret`
+
+The workflow file `.github/workflows/deploy-pages.yml` reads these secrets during `npm run build`.
+
+### 6. Verify locally
 
 - Run `npm run dev`
 - Submit the form
