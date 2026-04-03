@@ -1,9 +1,15 @@
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import { Mail, Phone, Linkedin, Github, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_CONTACT_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_CONTACT_TEMPLATE_ID;
+const EMAILJS_AUTOREPLY_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const contactInfo = [
   {
@@ -35,19 +41,79 @@ const socialLinks = [
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    });
-    setFormData({ name: "", email: "", message: "" });
+
+    if (
+      !EMAILJS_SERVICE_ID ||
+      !EMAILJS_CONTACT_TEMPLATE_ID ||
+      !EMAILJS_AUTOREPLY_TEMPLATE_ID ||
+      !EMAILJS_PUBLIC_KEY
+    ) {
+      toast({
+        title: "Contact form not configured",
+        description:
+          "Email service keys are missing. Add VITE_EMAILJS_* values to your .env file.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_CONTACT_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: "nishantkr.0904@gmail.com",
+        },
+        {
+          publicKey: EMAILJS_PUBLIC_KEY,
+        },
+      );
+
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_AUTOREPLY_TEMPLATE_ID,
+        {
+          to_name: formData.name,
+          to_email: formData.email,
+          from_name: "Nishant Kumar",
+          reply_to: "nishantkr.0904@gmail.com",
+        },
+        {
+          publicKey: EMAILJS_PUBLIC_KEY,
+        },
+      );
+
+      toast({
+        title: "Message sent successfully",
+        description:
+          "Thanks for reaching out. I have received your message and you should receive a confirmation email shortly.",
+      });
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("EmailJS send failed", error);
+      toast({
+        title: "Message failed",
+        description:
+          "Something went wrong while sending your message. Please try again in a moment.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -167,8 +233,8 @@ const ContactSection = () => {
                 className="bg-card resize-none"
               />
             </div>
-            <Button type="submit" size="lg" className="w-full">
-              Send Message
+            <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Sending..." : "Send Message"}
               <Send className="ml-2 h-4 w-4" />
             </Button>
           </form>
